@@ -22,7 +22,7 @@ public class UserRestController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> add(UserRequest userRequest){
+    public ResponseEntity<UserResponse> add(@RequestBody UserRequest userRequest){
         UserResponse userResponse = userService.add(userRequest);
         return ResponseEntity.ok().body(userResponse);
     }
