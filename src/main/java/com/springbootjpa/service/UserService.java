@@ -2,6 +2,7 @@ package com.springbootjpa.service;
 
 import com.springbootjpa.domain.User;
 import com.springbootjpa.domain.UserRepository;
+import com.springbootjpa.domain.UserRequest;
 import com.springbootjpa.domain.UserResponse;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,11 @@ public class UserService {
             User user = optUser.get();
             return new UserResponse(user.getId(), user.getUsername(), "");
         }
+    }
+
+    public UserResponse add(UserRequest userRequest){
+        User user = userRequest.toEntity();
+        User savedUser = userRepository.save(user);
+        return new UserResponse(savedUser.getId(), savedUser.getUsername(), "유저 등록이 성공했습니다.");
     }
 }
