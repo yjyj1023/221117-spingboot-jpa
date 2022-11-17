@@ -29,7 +29,13 @@ public class UserService {
 
     public UserResponse add(UserRequest userRequest){
         User user = userRequest.toEntity();
-        User savedUser = userRepository.save(user);
-        return new UserResponse(savedUser.getId(), savedUser.getUsername(), "유저 등록이 성공했습니다.");
+        Optional<User> optUser = userRepository.findByUsername(user.getUsername());
+        if(optUser.isEmpty()){
+            User savedUser = userRepository.save(user);
+            return new UserResponse(savedUser.getId(), savedUser.getUsername(), "유저 등록이 성공했습니다.");
+        }else {
+            User user2 = optUser.get();
+            return new UserResponse(null, user2 .getUsername(), "이 user 는 이미 존재 합니다. 다른 이름을 사용하세요.");
+        }
     }
 }
